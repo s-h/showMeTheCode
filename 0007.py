@@ -17,15 +17,13 @@ def getCodeFile(dirName):
             path = os.path.join(root,f) #获取绝对路径文件名
             if os.path.splitext(path)[1] in fileType:
                 fileList.append(path)
-                print "添加" + str(path)
-            else:
-                print "略过" + str(path)
-
 
 def getStatistics(path):
     lineNumber = 0   #行
-    nodeNumber = 0   #注释
+    singleLineNumber = 0   #注释
     blankNumber = 0  #空行
+    mutilineNumber = 1
+    mutiline = False #多行注释
     f = open(path,'r')
     data = [line.strip() for line in f.readlines()]
     f.close()
@@ -33,11 +31,19 @@ def getStatistics(path):
         lineNumber += 1
         if line == '':
             blankNumber += 1
+        if re.match("^'''$",line):      #多行注释
+            mutiline = not(mutiline)
+        if mutiline == True:
+            mutilineNumber += 1
         elif re.match("^#!/usr/",line):
             pass
-        elif re.match("^#",line):       #多行注释没有解决
-            nodeNumber += 1
-    return lineNumber,nodeNumber,blankNumber
+        elif re.match("^#",line):       #单行注释
+            singleLineNumber += 1
+    if mutilineNumber > 1:
+        commentsNumber = singleLineNumber + mutilineNumber 
+    else:
+        commentsNumber = singleLineNumber
+    return lineNumber,commentsNumber,blankNumber
         
 
     
