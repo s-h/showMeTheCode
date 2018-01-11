@@ -5,8 +5,8 @@ import sys,re
 
 wordNumber = 0
 fileName = sys.argv[1]
-f = open(fileName,'r')
-for line in f:
-    word = re.findall('\w+',line)
-    wordNumber += len(word)
+with open(fileName) as f:
+    f = f.read()
+    word = re.findall('\w+',f)
+wordNumber += len(word)
 print wordNumber
