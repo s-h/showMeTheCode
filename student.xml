@@ -2,6 +2,6 @@
 	<root>
 		<students>
 			<!--学生信息表 "id" : [名字, 数学, 语文, 英文]-->
-			{u'1': [u'\u5f20\u4e09', 150, 120, 100], u'3': [u'\u738b\u4e94', 60, 66, 68], u'2': [u'\u674e\u56db', 90, 99, 95]}
+			{&quot;1&quot;: [&quot;1&quot;, &quot;张三&quot;, 150.0, 120.0, 100.0], &quot;2&quot;: [&quot;2&quot;, &quot;李四&quot;, 90.0, 99.0, 95.0], &quot;3&quot;: [&quot;3&quot;, &quot;王五&quot;, 60.0, 66.0, 68.0]}
 		</students>
 	</root>

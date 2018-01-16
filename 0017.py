@@ -19,17 +19,22 @@
 #</students>
 #</root>
 import xml.dom.minidom,json
-import xlrd
+import xlrd,json
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 def readXls(fileName):
     data = xlrd.open_workbook(fileName)
     table = data.sheets()[0]
     nrows = table.nrows      #表格行数
     ncols = table.ncols      #表格列数
-    for nrow in range(nrows):     
-        for ncol in range(ncols):
-            print table.row_values(nrow)[ncol]
-    pass
+    xlsData = {}
+    for i in range(nrows):
+        xlsData[i+1] = table.row_values(i)
+    return xlsData
+
+
 
 def writeXml(data):
     doc = xml.dom.minidom.Document()   #创建xml文件
@@ -41,11 +46,12 @@ def writeXml(data):
 
     comment = '学生信息表 "id" : [名字, 数学, 语文, 英文]'
     student.appendChild(doc.createComment(comment))
-    student.appendChild(doc.createTextNode(str(data)))
+    student.appendChild(doc.createTextNode(json.dumps(data, encoding='utf-8',ensure_ascii=False)))
 
     fp = open('student.xml', 'w')
     doc.writexml(fp, indent='\t', addindent='\t', newl='\n', encoding='utf-8')
 
 
 fileName = "student.xls"
-readXls(fileName)
+data = readXls(fileName)
+writeXml(data)
