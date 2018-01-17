@@ -6,7 +6,7 @@ def makActivation(actNumber):
     radomStrNumber = [ str(x) for x in range(10) ]
     radomStrLower = [ chr(x) for x in range(65,91) ]
     radomStrCapital = [ chr(x) for x in range(97,123) ]
-    radomStr =  radomStrNumber + radomStrLower + radomStrLower
+    radomStr =  radomStrNumber + radomStrLower + radomStrCapital
     activations = []
     n = 0
     while n < 100:
