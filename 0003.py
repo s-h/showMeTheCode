@@ -1,16 +1,10 @@
 #!/usr/bin/env python
-#coding:utf-8
-import random,MySQLdb
-
-# mysql setting
-conn = MySQLdb.connect(
-    host = '127.0.0.1',
-    port = 3306,
-    user = 'user',
-    passwd = 'passwd',
-    db = 'python',
-    charset = 'utf8'
-    )
+#coding: utf-8
+'''
+第 0003 题： 将 0001 题生成的 200 个激活码（或者优惠券）保存到 Redis 非关系型数据库中。
+'''
+import random
+import redis
 
 def makActivation(actNumber):
     radomStrNumber = [ str(x) for x in range(10) ]
@@ -31,14 +25,12 @@ def makActivation(actNumber):
     return activations
 
 def writeAct(activations):
-    cur = conn.cursor()
+    r = redis.Redis(host='127.0.0.1',port=6379,db=0)
+    n = 1
     for act in activations:
-        cur.execute('insert into activations values(NULL,"%s")' % (act))
-    cur.close()
-    conn.commit()
-    conn.close()
+        r.set(n,act)
+        n += 1
+
 
 writeAct(makActivation(100))
-
-
 
